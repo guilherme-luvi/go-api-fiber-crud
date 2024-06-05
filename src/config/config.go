@@ -4,11 +4,13 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	"gorm.io/gorm"
 )
 
 var (
 	Port   string
 	logger *Logger
+	db     *gorm.DB
 )
 
 func InitEnvVariables() error {
@@ -18,6 +20,22 @@ func InitEnvVariables() error {
 
 	Port = os.Getenv("PORT")
 	return nil
+}
+
+func InitDB() error {
+	var err error
+
+	db, err = InitSQLite()
+	if err != nil {
+		return err
+	}
+
+	logger.Info("Database connection established successfully")
+	return nil
+}
+
+func GetDB() *gorm.DB {
+	return db
 }
 
 func GetLogger(prefix string) *Logger {

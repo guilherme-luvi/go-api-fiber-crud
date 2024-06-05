@@ -13,6 +13,7 @@ func initRoutes(router *fiber.App) {
 	v1 := router.Group("/api/v1")
 	{
 		// User routes
+		v1.Post("/users", handlers.CreateUser)
 		v1.Get("/users", handlers.GetUsers)
 	}
 

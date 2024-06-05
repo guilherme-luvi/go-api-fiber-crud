@@ -15,6 +15,13 @@ func main() {
 		return
 	}
 
+	// init database
+	err := config.InitDB()
+	if err != nil {
+		logger.Error("Error initializing database")
+		return
+	}
+
 	// Setup router
 	router.SetupRouter()
 }
