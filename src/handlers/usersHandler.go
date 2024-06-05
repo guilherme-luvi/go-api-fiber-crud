@@ -10,40 +10,35 @@ func CreateUser(c fiber.Ctx) error {
 	request := CreateUserRequest{}
 	if err := c.Bind().Body(&request); err != nil {
 		logger.Error("Error binding request body")
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "Error binding request body",
-		})
+		sendError(c, fiber.StatusBadRequest, "Invalid request body")
+	}
+
+	if err := request.validate(); err != nil {
+		logger.Error("Invalid request body", err)
+		sendError(c, fiber.StatusBadRequest, err.Error())
 	}
 
 	user := schemas.User{
-		Name:     request.Name,
-		Email:    request.Email,
-		Password: request.Password,
+		Name:  request.Name,
+		Email: request.Email,
 	}
 
 	if err := repositories.NewUserRepository(db).CreateUser(user); err != nil {
 		logger.Error("Failed to create user", err)
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": "Failed to create user",
-		})
+		sendError(c, fiber.StatusInternalServerError, "Failed to create user")
 	}
 
-	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
-		"message": "User created successfully",
-		"user":    user,
-	})
+	sendSuccess(c, fiber.StatusCreated, user)
+	return nil
 }
 
 func GetUsers(c fiber.Ctx) error {
 	users, err := repositories.NewUserRepository(db).GetUsers()
 	if err != nil {
 		logger.Error("Failed to get users", err)
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": "Failed to get users",
-		})
+		sendError(c, fiber.StatusInternalServerError, "Failed to get users")
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"users": users,
-	})
+	sendSuccess(c, fiber.StatusOK, users)
+	return nil
 }
