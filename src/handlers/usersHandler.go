@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v3"
 	"github.com/guilherme-luvi/go-api-fiber-crud/src/repositories"
 	"github.com/guilherme-luvi/go-api-fiber-crud/src/schemas"
+	"github.com/guilherme-luvi/go-api-fiber-crud/src/security"
 )
 
 func CreateUser(c fiber.Ctx) error {
@@ -20,9 +21,12 @@ func CreateUser(c fiber.Ctx) error {
 		return nil
 	}
 
+	hashedPassword, _ := security.HashPassword(request.Password)
+
 	user := schemas.User{
-		Name:  request.Name,
-		Email: request.Email,
+		Name:     request.Name,
+		Email:    request.Email,
+		Password: hashedPassword,
 	}
 
 	if err := repositories.NewUserRepository(db).CreateUser(user); err != nil {
@@ -44,5 +48,23 @@ func GetUsers(c fiber.Ctx) error {
 	}
 
 	sendSuccess(c, fiber.StatusOK, users)
+	return nil
+}
+
+func DeleteUser(c fiber.Ctx) error {
+	userID := c.Params("id")
+	if userID == "" {
+		logger.Error("User ID not provided")
+		sendError(c, fiber.StatusBadRequest, "User ID is required")
+		return nil
+	}
+
+	if err := repositories.NewUserRepository(db).DeleteUser(userID); err != nil {
+		logger.Error("Failed to delete user", err)
+		sendError(c, fiber.StatusInternalServerError, "Failed to delete user")
+		return nil
+	}
+
+	sendSuccess(c, fiber.StatusNoContent, nil)
 	return nil
 }

@@ -8,9 +8,10 @@ import (
 )
 
 var (
-	Port   string
-	logger *Logger
-	db     *gorm.DB
+	Port      string
+	SecretKey []byte
+	logger    *Logger
+	db        *gorm.DB
 )
 
 func InitEnvVariables() error {
@@ -19,6 +20,7 @@ func InitEnvVariables() error {
 	}
 
 	Port = os.Getenv("PORT")
+	SecretKey = []byte(os.Getenv("SECRET_KEY"))
 	return nil
 }
 
