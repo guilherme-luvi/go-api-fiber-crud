@@ -23,6 +23,10 @@ func (u *user) GetUsers() ([]schemas.User, error) {
 	return users, err
 }
 
+func (u *user) GetUserByID(id string, user *schemas.User) error {
+	return u.db.First(user, id).Error
+}
+
 func (u *user) GetUserByEmail(email string, user *schemas.User) error {
 	return u.db.Where("email = ?", email).First(user).Error
 }

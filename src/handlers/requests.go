@@ -21,6 +21,10 @@ func (req *CreateUserRequest) validate() error {
 		return errParamMissing("email", "string")
 	}
 
+	if req.Password == "" {
+		return errParamMissing("password", "string")
+	}
+
 	return nil
 }
 

@@ -59,6 +59,14 @@ func DeleteUser(c fiber.Ctx) error {
 		return nil
 	}
 
+	userIDFromToken := c.Locals("userId").(string)
+
+	if userIDFromToken != userID {
+		logger.Error("Unauthorized access")
+		sendError(c, fiber.StatusUnauthorized, "Unauthorized access")
+		return nil
+	}
+
 	if err := repositories.NewUserRepository(db).DeleteUser(userID); err != nil {
 		logger.Error("Failed to delete user", err)
 		sendError(c, fiber.StatusInternalServerError, "Failed to delete user")
