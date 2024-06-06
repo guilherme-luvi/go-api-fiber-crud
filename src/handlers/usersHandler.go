@@ -59,6 +59,7 @@ func DeleteUser(c fiber.Ctx) error {
 		return nil
 	}
 
+	// Get the user ID from context
 	userIDFromToken := c.Locals("userId").(string)
 
 	if userIDFromToken != userID {
