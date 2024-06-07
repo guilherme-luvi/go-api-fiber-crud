@@ -7,7 +7,9 @@ import (
 )
 
 var (
-	basePath = "/api/v1"
+	basePath         = "api/"
+	usersBasePath    = basePath + "v1/users"
+	starwarsBasePath = basePath + "v1/starwars"
 )
 
 func initRoutes(router *fiber.App) {
@@ -18,9 +20,9 @@ func initRoutes(router *fiber.App) {
 	router.Post(basePath+"/login", handlers.Login)
 
 	// User routes group
-	v1Users := router.Group(basePath + "/users")
+	v1Users := router.Group(usersBasePath)
 	{
-		// Middleware for routes that require authentication
+		// Authentication middleware for routes starting with /delete and /update
 		v1Users.Use([]string{"/delete", "/update"}, middlewares.RequireAuth)
 
 		// User routes
@@ -32,7 +34,7 @@ func initRoutes(router *fiber.App) {
 	}
 
 	// Star Wars API integration routes group
-	v1StarWars := router.Group(basePath + "/starwars")
+	v1StarWars := router.Group(starwarsBasePath)
 	{
 		v1StarWars.Get("/random/people", handlers.GetStarWarsPeople)
 		v1StarWars.Get("/random/planet", handlers.GetStarWarsPlanet)
