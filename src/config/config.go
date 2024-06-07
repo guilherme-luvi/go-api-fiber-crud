@@ -8,10 +8,11 @@ import (
 )
 
 var (
-	Port      string
-	SecretKey []byte
-	logger    *Logger
-	db        *gorm.DB
+	Port           string
+	StarWarsAPIURL string
+	SecretKey      []byte
+	logger         *Logger
+	db             *gorm.DB
 )
 
 func InitEnvVariables() error {
@@ -20,6 +21,7 @@ func InitEnvVariables() error {
 	}
 
 	Port = os.Getenv("PORT")
+	StarWarsAPIURL = os.Getenv("STAR_WARS_API_URL")
 	SecretKey = []byte(os.Getenv("SECRET_KEY"))
 	return nil
 }
@@ -43,4 +45,8 @@ func GetDB() *gorm.DB {
 func GetLogger(prefix string) *Logger {
 	logger = NewLogger(prefix)
 	return logger
+}
+
+func GetHttpClient() *HttpClientService {
+	return NewHttpClientService()
 }

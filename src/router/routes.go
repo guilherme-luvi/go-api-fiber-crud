@@ -6,23 +6,33 @@ import (
 	"github.com/guilherme-luvi/go-api-fiber-crud/src/middlewares"
 )
 
+var (
+	basePath = "/api/v1"
+)
+
 func initRoutes(router *fiber.App) {
 
-	// Initialize handlers
-	handlers.InitHandler()
+	handlers.InitHandlers()
 
-	v1 := router.Group("/api/v1")
+	// Login route
+	router.Post(basePath+"/login", handlers.Login)
+
+	// User routes group
+	v1Users := router.Group(basePath + "/users")
 	{
 		// Middleware for routes that require authentication
-		v1.Use("/users/:id", middlewares.RequireAuth)
+		v1Users.Use([]string{"/delete", "/update"}, middlewares.RequireAuth)
 
 		// User routes
-		v1.Post("/users", handlers.CreateUser)
-		v1.Get("/users", handlers.GetUsers)
-		v1.Delete("/users/:id", handlers.DeleteUser)
-
-		// Login route
-		v1.Post("/login", handlers.Login)
+		v1Users.Post("/create", handlers.CreateUser)
+		v1Users.Get("/get", handlers.GetUsers)
+		v1Users.Delete("/delete/:id", handlers.DeleteUser)
 	}
 
+	// Star Wars API routes group
+	v1StarWars := router.Group(basePath + "/starwars")
+	{
+		v1StarWars.Get(basePath+"/random/people", handlers.GetStarWarsPeople)
+		v1StarWars.Get(basePath+"/random/planet", handlers.GetStarWarsPlanet)
+	}
 }
