@@ -17,7 +17,7 @@ func (u *user) CreateUser(user schemas.User) error {
 	return u.db.Create(&user).Error
 }
 
-func (u *user) GetUsers() ([]schemas.User, error) {
+func (u *user) GetAllUsers() ([]schemas.User, error) {
 	var users []schemas.User
 	err := u.db.Find(&users).Error
 	return users, err
@@ -29,6 +29,10 @@ func (u *user) GetUserByID(id string, user *schemas.User) error {
 
 func (u *user) GetUserByEmail(email string, user *schemas.User) error {
 	return u.db.Where("email = ?", email).First(user).Error
+}
+
+func (u *user) UpdateUser(id string, user schemas.User) error {
+	return u.db.Model(&schemas.User{}).Where("id = ?", id).Updates(&user).Error
 }
 
 func (u *user) DeleteUser(id string) error {
