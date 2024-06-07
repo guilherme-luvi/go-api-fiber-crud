@@ -6,28 +6,35 @@ import (
 	"github.com/guilherme-luvi/go-api-fiber-crud/src/middlewares"
 )
 
+const (
+	ApiV1BasePath = "/api/v1"
+	UsersRoute    = "/users"
+	StarWarsRoute = "/starwars"
+)
+
 func initRoutes(router *fiber.App) {
 
 	handlers.InitHandlers()
 
-	// Login route
-	router.Post("api/login", handlers.Login)
-
 	// API v1 routes group
-	v1 := router.Group("/api/v1/")
+	v1 := router.Group(ApiV1BasePath)
+
+	// User routes
+	userRoutes := v1.Group(UsersRoute)
+	userRoutes.Use([]string{"/delete", "/update"}, middlewares.RequireAuth)
 	{
-		// Authentication middleware for routes starting with /users/delete and /users/update
-		v1.Use([]string{"users/delete", "users/update"}, middlewares.RequireAuth)
+		userRoutes.Post("/login", handlers.Login)
+		userRoutes.Post("/create", handlers.CreateUser)
+		userRoutes.Get("/get", handlers.GetAllUsers)
+		userRoutes.Get("/get/:id", handlers.GetUserByID)
+		userRoutes.Put("/update/:id", handlers.UpdateUser)
+		userRoutes.Delete("/delete/:id", handlers.DeleteUser)
+	}
 
-		// User routes
-		v1.Post("users/create", handlers.CreateUser)
-		v1.Get("users/get", handlers.GetAllUsers)
-		v1.Get("users/get/:id", handlers.GetUserByID)
-		v1.Put("users/update/:id", handlers.UpdateUser)
-		v1.Delete("users/delete/:id", handlers.DeleteUser)
-
-		// Star Wars API integration routes group
-		v1.Get("/random/people", handlers.GetStarWarsPeople)
-		v1.Get("/random/planet", handlers.GetStarWarsPlanet)
+	// Star Wars API integration routes group
+	starWarsRoutes := v1.Group(StarWarsRoute)
+	{
+		starWarsRoutes.Get("/random/people", handlers.GetStarWarsPeople)
+		starWarsRoutes.Get("/random/planet", handlers.GetStarWarsPlanet)
 	}
 }
