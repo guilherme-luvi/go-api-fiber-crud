@@ -29,10 +29,10 @@ func initRoutes(router *fiber.App) {
 		v1Users.Delete("/delete/:id", handlers.DeleteUser)
 	}
 
-	// Star Wars API routes group
+	// Star Wars API integration routes group
 	v1StarWars := router.Group(basePath + "/starwars")
 	{
-		v1StarWars.Get(basePath+"/random/people", handlers.GetStarWarsPeople)
-		v1StarWars.Get(basePath+"/random/planet", handlers.GetStarWarsPlanet)
+		v1StarWars.Get("/random/people", handlers.GetStarWarsPeople)
+		v1StarWars.Get("/random/planet", handlers.GetStarWarsPlanet)
 	}
 }
