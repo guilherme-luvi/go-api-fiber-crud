@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v3"
-	"github.com/guilherme-luvi/go-api-fiber-crud/src/config"
+	"github.com/guilherme-luvi/go-api-fiber-crud/pkg/config"
 )
 
 func SetupRouter() {

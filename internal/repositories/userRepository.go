@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"github.com/guilherme-luvi/go-api-fiber-crud/src/schemas"
+	"github.com/guilherme-luvi/go-api-fiber-crud/internal/schemas"
 	"gorm.io/gorm"
 )
 

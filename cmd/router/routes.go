@@ -2,8 +2,8 @@ package router
 
 import (
 	"github.com/gofiber/fiber/v3"
-	"github.com/guilherme-luvi/go-api-fiber-crud/src/handlers"
-	"github.com/guilherme-luvi/go-api-fiber-crud/src/middlewares"
+	"github.com/guilherme-luvi/go-api-fiber-crud/internal/handlers"
+	"github.com/guilherme-luvi/go-api-fiber-crud/internal/middlewares"
 )
 
 const (

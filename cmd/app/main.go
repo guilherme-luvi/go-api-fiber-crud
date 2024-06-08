@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/guilherme-luvi/go-api-fiber-crud/src/config"
-	"github.com/guilherme-luvi/go-api-fiber-crud/src/router"
+	"github.com/guilherme-luvi/go-api-fiber-crud/cmd/router"
+	"github.com/guilherme-luvi/go-api-fiber-crud/pkg/config"
 )
 
 func main() {
@@ -22,6 +22,5 @@ func main() {
 		return
 	}
 
-	// Setup router
 	router.SetupRouter()
 }

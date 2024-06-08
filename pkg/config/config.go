@@ -3,6 +3,7 @@ package config
 import (
 	"os"
 
+	"github.com/guilherme-luvi/go-api-fiber-crud/pkg/database"
 	"github.com/joho/godotenv"
 	"gorm.io/gorm"
 )
@@ -16,7 +17,7 @@ var (
 )
 
 func InitEnvVariables() error {
-	if err := godotenv.Load(); err != nil {
+	if err := godotenv.Load("../../.env"); err != nil {
 		logger.Error("Error loading .env file")
 	}
 
@@ -29,7 +30,7 @@ func InitEnvVariables() error {
 func InitDB() error {
 	var err error
 
-	db, err = InitSQLite()
+	db, err = database.InitSQLite()
 	if err != nil {
 		return err
 	}
