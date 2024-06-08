@@ -6,37 +6,37 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/guilherme-luvi/go-api-fiber-crud/src/config"
-	"github.com/guilherme-luvi/go-api-fiber-crud/src/schemas"
+	"github.com/guilherme-luvi/go-api-fiber-crud/internal/models"
+	"github.com/guilherme-luvi/go-api-fiber-crud/pkg/config"
 )
 
-func GetRandomStarWarsPeople() (schemas.StarWarsPerson, error) {
+func GetRandomStarWarsPeople() (models.StarWarsPerson, error) {
 	url := config.StarWarsAPIURL + "/people/"
 
 	resp, err := config.GetHttpClient().Get(url + getRandomNumber())
 	if err != nil {
-		return schemas.StarWarsPerson{}, err
+		return models.StarWarsPerson{}, err
 	}
 
-	person := schemas.StarWarsPerson{}
+	person := models.StarWarsPerson{}
 	if err := json.Unmarshal(resp, &person); err != nil {
-		return schemas.StarWarsPerson{}, err
+		return models.StarWarsPerson{}, err
 	}
 
 	return person, nil
 }
 
-func GetRandomStarWarsPlanet() (schemas.StarWarsPlanet, error) {
+func GetRandomStarWarsPlanet() (models.StarWarsPlanet, error) {
 	url := config.StarWarsAPIURL + "/planets/"
 
 	resp, err := config.GetHttpClient().Get(url + getRandomNumber())
 	if err != nil {
-		return schemas.StarWarsPlanet{}, err
+		return models.StarWarsPlanet{}, err
 	}
 
-	planet := schemas.StarWarsPlanet{}
+	planet := models.StarWarsPlanet{}
 	if err := json.Unmarshal(resp, &planet); err != nil {
-		return schemas.StarWarsPlanet{}, err
+		return models.StarWarsPlanet{}, err
 	}
 
 	return planet, nil

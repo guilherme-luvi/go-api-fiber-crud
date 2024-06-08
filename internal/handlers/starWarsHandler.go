@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"github.com/gofiber/fiber/v3"
-	"github.com/guilherme-luvi/go-api-fiber-crud/src/services"
+	"github.com/guilherme-luvi/go-api-fiber-crud/internal/services"
 )
 
 func GetStarWarsPeople(c fiber.Ctx) error {

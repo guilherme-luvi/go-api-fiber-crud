@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/guilherme-luvi/go-api-fiber-crud/src/config"
+	"github.com/guilherme-luvi/go-api-fiber-crud/pkg/config"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -2,9 +2,9 @@ package handlers
 
 import (
 	"github.com/gofiber/fiber/v3"
-	"github.com/guilherme-luvi/go-api-fiber-crud/src/repositories"
-	"github.com/guilherme-luvi/go-api-fiber-crud/src/schemas"
-	"github.com/guilherme-luvi/go-api-fiber-crud/src/security"
+	"github.com/guilherme-luvi/go-api-fiber-crud/internal/repositories"
+	"github.com/guilherme-luvi/go-api-fiber-crud/internal/schemas"
+	"github.com/guilherme-luvi/go-api-fiber-crud/internal/security"
 )
 
 func CreateUser(c fiber.Ctx) error {

@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"github.com/guilherme-luvi/go-api-fiber-crud/src/config"
+	"github.com/guilherme-luvi/go-api-fiber-crud/pkg/config"
 	"gorm.io/gorm"
 )
 

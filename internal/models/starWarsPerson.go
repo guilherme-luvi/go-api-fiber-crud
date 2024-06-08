@@ -1,4 +1,4 @@
-package schemas
+package models
 
 type StarWarsPerson struct {
 	Name      string `json:"name"`
