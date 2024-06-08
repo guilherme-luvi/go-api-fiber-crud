@@ -17,7 +17,7 @@ var (
 )
 
 func InitEnvVariables() error {
-	if err := godotenv.Load(); err != nil {
+	if err := godotenv.Load("../../.env"); err != nil {
 		logger.Error("Error loading .env file")
 	}
 

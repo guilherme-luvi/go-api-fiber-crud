@@ -10,7 +10,7 @@ import (
 )
 
 func InitSQLite() (*gorm.DB, error) {
-	dbPath := "./././db/main.db"
+	dbPath := "./db/main.db"
 
 	// check if database file exists
 	_, err := os.Stat(dbPath)
